@@ -13,14 +13,14 @@
             <p class="type-status"><span>|</span> Receiver is typing...</p>
           </div>
           <div class="col-lg-4 mb-3">
-            <input [(ngModel)]="senderName" type="text" class="form-control" placeholder="Enter your name">
+            <input type="text" [(ngModel)]="sender"  (keyup)="$event.keyCode == 13 && send()" class="form-control" placeholder="Enter your name">
           </div>
           <div class="chat-box col-lg-12">
-            <div class="message receiver">
-              <strong>Receiver :</strong>
-              <p class="m-0">Here is the message</p>
+            <div *ngFor="let msg of messageList"  class="message receiver">
+              <strong>{{ msg[0] }} :</strong>
+              <p class="m-0">{{ msg[1] }}</p>
             </div>
-            <div class="message sender">
+            <!-- <div class="message sender">
               <strong>Sender :</strong>
               <p class="m-0">Here is the message</p>
             </div>
@@ -47,10 +47,10 @@
             <div class="message sender">
               <strong>Sender :</strong>
               <p class="m-0">Here is the message</p>
-            </div>
+            </div> -->
           </div>
           <div class="col-lg-6 mt-3 d-flex">
-            <input [(ngModel)]="senderMessage" type="text" class="form-control type-msg" placeholder="Type your message here..">
+            <input [(ngModel)]="message" type="text" (keyup)="$event.keyCode == 13 && send()" class="form-control type-msg" placeholder="Type your message here..">
             <div (click)="send()" class="send-btn">
               <i class="fas fa-paper-plane"></i>
             </div>

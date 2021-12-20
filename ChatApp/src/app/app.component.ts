@@ -7,25 +7,26 @@ import { SocketService } from './service/socket.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+sender:string;
+message:string;
+newMessage: string [] = [];
+messageList: string[] = [];
 
-  senderName: string;
-  senderMessage: string;
+// senderData = new Message(this.senderName, this.senderMessage);
 
+constructor(private chatService: SocketService) { }
 
-  // senderData = new Message(this.senderName, this.senderMessage);
+ngOnInit() {
+  this.chatService.getData().subscribe((message: string) => {
+    this.messageList.push(message);
+    console.log('here ngoninit',this.messageList);
+    
+  });
+}
 
-  constructor(private socketConnect: SocketService) { }
-
-  ngOnInit() {
-    this.socketConnect.socketConnection();
-
-  }
-  send() {
-    let senderData = {
-      name : this.senderName,
-      message : this.senderMessage 
-    }
-    this.socketConnect.sendData(senderData);
-    // console.log('compo',senderData);
-  }
+send() {  
+  this.newMessage = [this.sender,this.message];
+  this.chatService.sendData(this.newMessage);
+  console.log('here send -',this.newMessage);
+}
 }

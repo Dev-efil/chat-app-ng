@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { io } from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 
@@ -6,21 +7,28 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SocketService {
-  socket:any;
-  data:any;
+
+  message$: BehaviorSubject<string> = new BehaviorSubject('');
+
   constructor() { }
 
-  socketConnection() {
-    this.socket = io(environment.SOCKET_ENDPOINT);
-  }
+  socket = io(environment.SOCKET_ENDPOINT);
 
   sendData(senderData){
     // Emit the event named 'my message' to send this message to server
     this.socket.emit('sender', senderData); 
-    this.socket.on('broadcast', (data: string) => {
-      console.log(data);
-    });
-    // console.log('service',senderData);
+    console.log('service', senderData);
+    
   }
+
+  getData() {
+    this.socket.on('sender', (data) => {
+      this.message$.next(data);
+      // console.log('here -',data, 'here sub -', this.message$);
+    });
+    return this.message$.asObservable();
+  }
+
+
 
 }

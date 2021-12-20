@@ -21,10 +21,14 @@ io.on('connection', function (socket) {
     // socket.on('disconnect', () => {
     //     console.log('User disconnected');
     // });
+
     // Register an event to console the data which coming from Client.
-    socket.on('sender', (msg) => {
-        console.log('Message : '+ JSON.stringify(msg));
+    socket.on('sender', function(msg) {
+        console.log('Message : ',msg);
         // broadcast the event to all connected users
-        io.emit('broadcast', `server broadcast : ${JSON.stringify(msg)}`);
+        io.emit('sender', msg);
+    });
+    socket.on('typing', function(data){
+        io.socket.emit('typing', data);
     });
 });

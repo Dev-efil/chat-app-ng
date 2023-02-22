@@ -18,9 +18,11 @@ export class SocketService {
     // Emit the event named 'my message' to send this message to server
     this.socket.emit('sender', senderData); 
     console.log('service', senderData);
-    
   }
-
+  typing(user: string) {
+    this.socket.emit('typing', user);
+    console.log('servicetype', user);
+  }   
   getData() {
     this.socket.on('sender', (data) => {
       this.message$.next(data);

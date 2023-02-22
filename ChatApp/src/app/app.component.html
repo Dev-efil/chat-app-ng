@@ -10,12 +10,12 @@
             <div class="active">
               <p>Active : 2</p>
             </div>
-            <p class="type-status"><span>|</span> Receiver is typing...</p>
+            <p class="type-status"><span>|</span> {{ status }}</p>
           </div>
           <div class="col-lg-4 mb-3">
             <input type="text" [(ngModel)]="sender"  (keyup)="$event.keyCode == 13 && send()" class="form-control" placeholder="Enter your name">
           </div>
-          <div class="chat-box col-lg-12">
+          <div class="chat-box col-lg-12" id="chat-box">
             <div *ngFor="let msg of messageList"  class="message receiver">
               <strong>{{ msg[0] }} :</strong>
               <p class="m-0">{{ msg[1] }}</p>

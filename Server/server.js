@@ -29,6 +29,7 @@ io.on('connection', function (socket) {
         io.emit('sender', msg);
     });
     socket.on('typing', function(data){
-        io.socket.emit('typing', data);
+        console.log('server type',data);
+        io.emit('typing', data);
     });
 });

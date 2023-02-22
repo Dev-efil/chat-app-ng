@@ -11,6 +11,7 @@ sender:string;
 message:string;
 newMessage: string [] = [];
 messageList: string[] = [];
+status: string;
 
 // senderData = new Message(this.senderName, this.senderMessage);
 
@@ -19,14 +20,25 @@ constructor(private chatService: SocketService) { }
 ngOnInit() {
   this.chatService.getData().subscribe((message: string) => {
     this.messageList.push(message);
-    console.log('here ngoninit',this.messageList);
+    // console.log('here ngoninit',this.messageList);
     
   });
+ 
+  
+  
+}
+
+typing() {
+this.status = '';
+this.chatService.typing(this.sender);
+this.status = `${this.sender} is typing...`;
+console.log('typengon',this.sender);
 }
 
 send() {  
   this.newMessage = [this.sender,this.message];
   this.chatService.sendData(this.newMessage);
+  this.message = '';
   console.log('here send -',this.newMessage);
 }
 }
